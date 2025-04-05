@@ -1,90 +1,28 @@
-import iziToast from 'izitoast';
-import { fetchImages } from './js/pixabay-api.js';
-import {
-  showErrorMessage,
-  createMarkup,
-  clearGallery,
-  showLoadingIndicator,
-  hideLoadingIndicator,
-  showLoadMoreBtn,
-  hideLoadMoreBtn,
-} from './js/render-functions.js';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
 
-const searchform = document.querySelector('.form');
-const gallery = document.querySelector('.gallery');
-const loadMoreBtn = document.querySelector('.load-more-button');
+const swiper = new Swiper('.swiper', {
+  modules: [Navigation],
+  direction: 'horizontal',
+  slidesPerView: 1,
+  spaceBetween: 20,
+  keyboard: {
+    enabled: true,
+  },
 
-searchform.addEventListener('submit', toSearch);
-loadMoreBtn.addEventListener('click', toLoadMore);
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
 
-let page = 1;
-let searchQuery = null;
-
-async function toSearch(event) {
+const sectionProjects = document.querySelector('.projects');
+sectionProjects.addEventListener('keydown', event => {
   event.preventDefault();
-
-  hideLoadMoreBtn();
-
-  clearGallery(gallery);
-
-  const inputValue = event.target.elements['search-text'].value.trim();
-  searchQuery = inputValue;
-
-  if (!inputValue) {
-    showErrorMessage('You forgot important data');
-    return;
+  if (event.code === 'ArrowRight') {
+    swiper.slideNext(300);
+  } else if (event.code === 'ArrowLeft') {
+    swiper.slidePrev(300);
   }
-
-  page = 1;
-
-  showLoadingIndicator();
-
-  try {
-    const { hits, totalHits } = await fetchImages(inputValue, page);
-    if (!hits.length) {
-      showErrorMessage(
-        'Sorry, there are no images matching your search query. Please try again!'
-      );
-    }
-    createMarkup(hits, gallery);
-
-    if (gallery.querySelectorAll('a').length < totalHits) {
-      showLoadMoreBtn();
-    }
-  } catch (error) {
-    showErrorMessage('Failed to load images. Please try again!');
-  } finally {
-    hideLoadingIndicator();
-  }
-}
-
-async function toLoadMore() {
-  hideLoadMoreBtn();
-  showLoadingIndicator();
-  page += 1;
-
-  try {
-    const { hits, totalHits } = await fetchImages(searchQuery, page);
-    createMarkup(hits, gallery);
-
-    if (gallery.querySelectorAll('a').length < totalHits) {
-      showLoadMoreBtn();
-    } else {
-      showErrorMessage(
-        "We're sorry, but you've reached the end of search results."
-      );
-    }
-
-    const card = document.querySelector('.gallery-item');
-    const cardHeight = card.getBoundingClientRect().height;
-    window.scrollBy({
-      left: 0,
-      top: cardHeight * 2,
-      behavior: 'smooth',
-    });
-  } catch (error) {
-    showErrorMessage('Failed to load images. Please try again!');
-  } finally {
-    hideLoadingIndicator();
-  }
-}
+});
