@@ -1,26 +1,35 @@
 // import Swiper from 'swiper';
 // import { Navigation, Keyboard, Mousewheel, A11y } from 'swiper/modules';
 // import 'swiper/css';
-
+//
+// мои функции
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 
-const swiper = new Swiper('.swiper-container', {
+const projectSwiper = new Swiper('.project-swiper', {
   modules: [Navigation],
   direction: 'horizontal',
+  speed: 400,
+  spaceBetween: 0,
   slidesPerView: 2,
   slidesPerGroup: 1,
-  spaceBetween: 0, // Без расстояния между слайдами
+
   loop: true, // Включение круговой прокрутки
+  loopAdditionalSlides: 1,
 
   navigation: {
-    nextEl: '.tech-swiper-btn', // Кнопка "вперёд"
+    nextEl: '.swiper-button-next', // Кнопка "вперёд"
   },
 });
 
 // const prevButton = document.querySelector('.projects-prev-btn');
-// const nextButton = document.querySelector('.projects-next-btn');
+// const nextButton = document.querySelector('.swiper-button-next');
+// nextButton.addEventListener('click', onBut);
+
+// function onBut(event) {
+//   console.log('ich arbeite');
+// }
 
 // const swiper = new Swiper('.swiper', {
 //   modules: [Navigation, Keyboard, Mousewheel, A11y],

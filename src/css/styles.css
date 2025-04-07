@@ -313,33 +313,32 @@ img {
   background-color: transparent;
   border: none;
 } */
-
+/* 
 .tech-list {
-  /* display: flex; */
+  display: flex;
   overflow: hidden;
   width: 260px;
   height: 130px;
   background-color: aquamarine;
-}
+} */
 
-.tech-cont {
+/* .tech-cont {
   background-color: aliceblue;
   display: flex;
-  gap: 20px;
   align-items: center;
   justify-content: space-between;
 }
 
-.tech-item {
+.project-swiper-slide {
   display: flex;
-
   width: 130px;
   height: 130px;
   background-color: transparent;
   border: #ed3b44 1px solid;
   border-radius: 50%;
-  display: flex;
   align-items: center;
   justify-content: center;
   color: #221919;
-}
+  flex-shrink: 0;
+  flex-grow: 0;
+} */
